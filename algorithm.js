@@ -9,7 +9,7 @@ function v2(longer, shorter, count) {
 }
 
 // helper for later algorithms
-function overflowCheck(longer, shorter, count, size) {
+function sizeOverflows(longer, shorter, count, size) {
 	// simulate putting in `count` boxes
 	let x = 0; // same axis as `longer`
 	let y = 0; // same axis as `shorter`
@@ -30,8 +30,23 @@ function expensive(longer, shorter, count) {
 	// `shorter` is the largest possible size, so we count
 	// the size down from there until all the boxes fit for one!
 	for (let size = shorter; size > 0; size--) {
-		if (!overflowCheck(longer, shorter, count, size)) return size;
+		if (!sizeOverflows(longer, shorter, count, size)) return size;
 	}
 }
 
-const algorithm = expensive;
+// relies on the assumption that above a certain width *all* insertions
+// overflow, and below it *none* do
+function binarySearch(longer, shorter, count) {
+	let size = Math.floor(shorter / 2);
+	let delta = Math.floor(shorter / 4);
+
+	do {
+		console.log(size, delta);
+		size += (sizeOverflows(longer, shorter, count, size) ? -1 : 1) * delta;
+		delta = Math.floor(delta / 2);
+	} while (delta > 0);
+
+	return size;
+}
+
+const algorithm = binarySearch;
