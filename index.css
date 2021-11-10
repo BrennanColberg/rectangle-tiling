@@ -38,7 +38,7 @@ main {
 	display: flex;
 	flex-flow: var(--direction) wrap;
 	justify-content: center;
-	align-items: center;
+	align-content: center;
 }
 
 /* boxes */
