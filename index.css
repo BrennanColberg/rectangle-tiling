@@ -22,4 +22,11 @@ main {
 	height: 100%;
 	flex-grow: 1;
 	border: 3px solid yellow;
+	display: flex;
+}
+
+.area {
+	flex-grow: 1;
+	margin: 20px;
+	border: 3px solid yellowgreen;
 }
