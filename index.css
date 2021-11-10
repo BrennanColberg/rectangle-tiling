@@ -1,6 +1,5 @@
 * {
 	margin: 0;
-	padding: 5px;
 	box-sizing: border-box;
 }
 
@@ -28,15 +27,18 @@ main {
 	height: 100%;
 	flex-grow: 1;
 	border: 3px solid yellow;
-	display: flex;
 	overflow-y: hidden;
+	display: flex;
 }
 
 #area {
 	flex-grow: 1;
 	margin: 20px;
 	border: 3px solid yellowgreen;
-	overflow-y: hidden;
+	display: flex;
+	flex-flow: var(--direction) wrap;
+	justify-content: center;
+	align-items: center;
 }
 
 /* boxes */

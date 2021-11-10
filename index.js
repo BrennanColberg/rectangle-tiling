@@ -8,6 +8,10 @@ function updateTiling() {
 	const size = computeSizeOfEachVideo(width, height, count);
 	console.log({ width, height, count, size });
 	document.documentElement.style.setProperty("--size", `${size}px`);
+	document.documentElement.style.setProperty(
+		"--direction",
+		width > height ? "row" : "column"
+	);
 }
 
 function renderBoxes() {
