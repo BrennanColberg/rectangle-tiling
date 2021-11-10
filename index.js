@@ -2,10 +2,12 @@ let boxes = 4;
 
 function updateTiling() {
 	const area = document.getElementById("area");
-	document.documentElement.style.setProperty(
-		"--size",
-		`${computeSizeOfEachVideo(area.clientWidth, area.clientHeight, boxes)}px`
-	);
+	const width = area.clientWidth;
+	const height = area.clientHeight;
+	const count = boxes;
+	const size = computeSizeOfEachVideo(width, height, count);
+	console.log({ width, height, count, size });
+	document.documentElement.style.setProperty("--size", `${size}px`);
 }
 
 function renderBoxes() {
