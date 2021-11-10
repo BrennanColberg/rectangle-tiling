@@ -1,6 +1,6 @@
 * {
 	margin: 0;
-	padding: 0;
+	padding: 5px;
 	box-sizing: border-box;
 }
 
@@ -16,6 +16,12 @@ body {
 header {
 	width: 100%;
 	border: 3px solid orange;
+	text-align: center;
+	font-size: 25pt;
+}
+
+header button {
+	font-size: inherit;
 }
 
 main {
@@ -29,4 +35,9 @@ main {
 	flex-grow: 1;
 	margin: 20px;
 	border: 3px solid yellowgreen;
+}
+
+.box {
+	border: 3px solid green;
+	background-color: lightgray;
 }
