@@ -4,8 +4,10 @@ function updateTiling() {
 	const area = document.getElementById("area");
 	const width = area.clientWidth;
 	const height = area.clientHeight;
+	const longer = Math.max(width, height);
+	const shorter = Math.min(width, height);
 	const count = boxes;
-	const size = computeSizeOfEachVideo(width, height, count);
+	const size = algorithm(longer, shorter, count);
 	console.log({ width, height, count, size });
 	document.documentElement.style.setProperty("--size", `${size}px`);
 	document.documentElement.style.setProperty(
