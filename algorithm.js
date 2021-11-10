@@ -37,15 +37,17 @@ function expensive(longer, shorter, count) {
 // relies on the assumption that above a certain width *all* insertions
 // overflow, and below it *none* do
 function binarySearch(longer, shorter, count) {
+	// binary search to get close
 	let size = Math.floor(shorter / 2);
 	let delta = Math.floor(shorter / 4);
-
 	do {
-		console.log(size, delta);
-		size += (sizeOverflows(longer, shorter, count, size) ? -1 : 1) * delta;
-		delta = Math.floor(delta / 2);
-	} while (delta > 0);
-
+		if (sizeOverflows(longer, shorter, count, size)) size -= Math.ceil(delta);
+		else size += Math.ceil(delta);
+		delta /= 2;
+	} while (delta > 1);
+	// go up then down to confirm in case search is off
+	size++;
+	while (sizeOverflows(longer, shorter, count, size)) size--;
 	return size;
 }
 
