@@ -27,11 +27,12 @@ function sizeOverflows(longer, shorter, count, size) {
 }
 
 function expensive(longer, shorter, count) {
-	// `shorter` is the largest possible size, so we count
-	// the size down from there until all the boxes fit for one!
-	for (let size = shorter; size > 0; size--) {
-		if (!sizeOverflows(longer, shorter, count, size)) return size;
-	}
+	// shorter side is the largest possible size
+	let size = shorter;
+	// count down until one size doesn't overflow
+	while (!sizeOverflows(longer, shorter, count, size)) size--;
+	// return the biggest (integer) option that doesn't overflow
+	return size;
 }
 
 // relies on the assumption that above a certain width *all* insertions
