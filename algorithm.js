@@ -67,15 +67,21 @@ function maxSizeWithRowCount(longer, shorter, boxesInRow, boxes) {
 }
 
 function direct(longer, shorter, boxes) {
+	// number of boxes in row/columns if aspect ratios matched perfectly
+	const x = Math.min(Math.sqrt(boxes / (shorter / longer)), boxes);
+	const y = Math.sqrt(boxes / (longer / shorter));
+	console.log({ x, y });
+
 	let size = 0;
-	for (
-		let boxesInRow = Math.ceil(Math.sqrt(boxes));
-		boxesInRow <= boxes;
-		boxesInRow++
-	) {
+	for (let boxesInRow = Math.floor(x); boxesInRow <= boxes; boxesInRow++) {
 		const newSize = maxSizeWithRowCount(longer, shorter, boxesInRow, boxes);
 		if (newSize < size) break;
 		size = newSize;
+		console.log({
+			boxesInRow,
+			size,
+			constrainedBy: size * boxesInRow === longer ? "longer" : "shorter",
+		});
 	}
 	return size;
 }
