@@ -68,9 +68,14 @@ function maxSizeWithRowCount(longer, shorter, boxesInRow, boxes) {
 
 function direct(longer, shorter, boxes) {
 	let size = 0;
-	for (let boxesInRow = boxes; boxesInRow >= Math.sqrt(boxes); boxesInRow--) {
+	for (
+		let boxesInRow = Math.ceil(Math.sqrt(boxes));
+		boxesInRow <= boxes;
+		boxesInRow++
+	) {
 		const newSize = maxSizeWithRowCount(longer, shorter, boxesInRow, boxes);
-		size = Math.max(size, newSize);
+		if (newSize < size) break;
+		size = newSize;
 	}
 	return size;
 }
