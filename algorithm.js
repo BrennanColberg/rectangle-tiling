@@ -9,7 +9,7 @@ function v2(longer, shorter, count) {
 }
 
 // helper for later algorithms
-function sizeOverflows(longer, shorter, count, size) {
+function expensiveOverflows(longer, shorter, count, size) {
 	// simulate putting in `count` boxes
 	let x = 0; // same axis as `longer`
 	let y = 0; // same axis as `shorter`
@@ -26,11 +26,17 @@ function sizeOverflows(longer, shorter, count, size) {
 	return y + size > shorter;
 }
 
+function overflows(longer, shorter, count, size) {
+	const boxesPerRow = Math.floor(longer / size);
+	const totalHeight = Math.ceil(count / boxesPerRow) * size;
+	return totalHeight > shorter;
+}
+
 function expensive(longer, shorter, count) {
 	// shorter side is the largest possible size
 	let size = shorter;
 	// count down until one size doesn't overflow
-	while (!sizeOverflows(longer, shorter, count, size)) size--;
+	while (!overflows(longer, shorter, count, size)) size--;
 	// return the biggest (integer) option that doesn't overflow
 	return size;
 }
@@ -42,13 +48,13 @@ function binarySearch(longer, shorter, count) {
 	let size = Math.floor(shorter / 2);
 	let delta = Math.floor(shorter / 4);
 	do {
-		if (sizeOverflows(longer, shorter, count, size)) size -= Math.ceil(delta);
+		if (overflows(longer, shorter, count, size)) size -= Math.ceil(delta);
 		else size += Math.ceil(delta);
 		delta /= 2;
 	} while (delta > 1);
 	// go up then down to confirm in case search is off
 	size++;
-	while (sizeOverflows(longer, shorter, count, size)) size--;
+	while (overflows(longer, shorter, count, size)) size--;
 	return size;
 }
 
