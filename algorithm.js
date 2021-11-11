@@ -35,27 +35,44 @@
 // 	return size;
 // }
 
-function overflows(longer, shorter, count, size) {
-	const boxesPerRow = Math.floor(longer / size);
-	const totalHeight = Math.ceil(count / boxesPerRow) * size;
-	return totalHeight > shorter;
+// function overflows(longer, shorter, count, size) {
+// 	const boxesPerRow = Math.floor(longer / size);
+// 	const totalHeight = Math.ceil(count / boxesPerRow) * size;
+// 	return totalHeight > shorter;
+// }
+
+// // relies on the assumption that above a certain width *all* insertions
+// // overflow, and below it *none* do
+// function binarySearch(longer, shorter, count) {
+// 	// binary search to get close
+// 	let size = Math.floor(shorter / 2);
+// 	let delta = Math.floor(shorter / 4);
+// 	do {
+// 		if (overflows(longer, shorter, count, size)) size -= Math.ceil(delta);
+// 		else size += Math.ceil(delta);
+// 		delta /= 2;
+// 	} while (delta > 1);
+// 	// go up then down to confirm in case search is off
+// 	size++;
+// 	while (overflows(longer, shorter, count, size)) size--;
+// 	return size;
+// }
+
+function maxSizeWithRowCount(longer, shorter, boxesInRow, boxes) {
+	const boxesInColumn = Math.ceil(boxes / boxesInRow);
+	const areaAspectRatio = longer / shorter;
+	const boxesAspectRatio = boxesInRow / boxesInColumn;
+	if (areaAspectRatio > boxesAspectRatio) return shorter / boxesInColumn;
+	else return longer / boxesInRow;
 }
 
-// relies on the assumption that above a certain width *all* insertions
-// overflow, and below it *none* do
-function binarySearch(longer, shorter, count) {
-	// binary search to get close
-	let size = Math.floor(shorter / 2);
-	let delta = Math.floor(shorter / 4);
-	do {
-		if (overflows(longer, shorter, count, size)) size -= Math.ceil(delta);
-		else size += Math.ceil(delta);
-		delta /= 2;
-	} while (delta > 1);
-	// go up then down to confirm in case search is off
-	size++;
-	while (overflows(longer, shorter, count, size)) size--;
+function direct(longer, shorter, boxes) {
+	let size = 0;
+	for (let boxesInRow = boxes; boxesInRow >= Math.sqrt(boxes); boxesInRow--) {
+		const newSize = maxSizeWithRowCount(longer, shorter, boxesInRow, boxes);
+		size = Math.max(size, newSize);
+	}
 	return size;
 }
 
-const algorithm = binarySearch;
+const algorithm = direct;
